@@ -47,13 +47,11 @@ def load_file_lock():
 
 load_file_lock()
 
-__default_key = "quick-less.db"
 
-
-def storage(data, key=__default_key):
+def store(data, key):
     b = pickle.dumps(data)
-    file_desc = os.open(key, os.O_CREAT | os.O_WRONLY)
-    os.write(file_desc, b)
+    with open(key, "wb") as f:
+        f.write(b)
     return
 
     # TODO: no fcntl
@@ -69,8 +67,10 @@ def storage(data, key=__default_key):
         logging.info(f"close file {file_desc}")
 
 
-def get(key=__default_key):
+def get_data(key):
     # TODO: add file read lock
     # file_desc = os.open(key, os.O_RDWR)
+    if not os.path.isfile(key):
+        return None
     with open(key, "rb") as f:
         return pickle.load(f)
