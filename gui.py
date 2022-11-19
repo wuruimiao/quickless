@@ -170,6 +170,7 @@ class ChongFan(QDialog):
             else:
                 going.append(QLabel(f"{key} {value.finish_time_str} 结束", self))
         self.display_labels(box, finished, "已完成")
+        box.addWidget(QLabel("\n", self))
         self.display_labels(box, going, "进行中")
         box.addStretch(1)
         return box
