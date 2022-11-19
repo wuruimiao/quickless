@@ -69,13 +69,7 @@ class TimeRecord(object):
         return self.__str()
 
 
-def init_time_box(day: QSpinBox, hour: QSpinBox, minute: QSpinBox, second: QSpinBox):
-    def _init():
-        day.setValue(0)
-        hour.setValue(11)
-        minute.setValue(30)
-        second.setValue(0)
-    return _init
+
 
 
 class ChongFan(QDialog):
@@ -111,6 +105,18 @@ class ChongFan(QDialog):
         store(self._record, self._db_name)
         return True
 
+    def init_time_box(self, item, day: QSpinBox, hour: QSpinBox, minute: QSpinBox, second: QSpinBox):
+        def _init():
+            now = datetime.now()
+            self._record[item].day = 0
+            self._record[item].hour = 11
+            self._record[item].minute = 30
+            self._record[item].second = 0
+            self._record[item].t = now
+            self.update_time_box_by_record(now, item, day, hour, minute, second)
+
+        return _init
+
     def _init_record_part(self, now):
         """
         初始化左侧记录面板
@@ -132,22 +138,12 @@ class ChongFan(QDialog):
             day, hour, minute, second = self._init_time_input()
             if item in self._record and not self._record[item].empty:
                 # 再次判断以免直接初始化记录
-                exist = self._record[item]
-                remain_d, remain_h, remain_m, remain_s = get_remain_time(
-                    exist.t, now, exist.day, exist.hour, exist.minute, exist.second)
-                day.setValue(remain_d)
-                hour.setValue(remain_h)
-                minute.setValue(remain_m)
-                second.setValue(remain_s)
+                self.update_time_box_by_record(now, item, day, hour, minute, second)
 
-            # 后关联，否则会触发更新
-            day.valueChanged[int].connect(update(item, "day"))
-            hour.valueChanged[int].connect(update(item, "hour"))
-            minute.valueChanged[int].connect(update(item, "minute"))
-            second.valueChanged[int].connect(update(item, "second"))
+            self.connect_time_box_action(day, hour, item, minute, second, update)
 
             btn = QPushButton(f"{item}耗时", self)
-            btn.clicked.connect(init_time_box(day, hour, minute, second))
+            btn.clicked.connect(self.init_time_box(item, day, hour, minute, second))
 
             make_one_line([btn,
                            day, QLabel("天", self),
@@ -157,6 +153,22 @@ class ChongFan(QDialog):
                            ], box)
         box.addStretch(1)
         return box
+
+    def connect_time_box_action(self, day, hour, item, minute, second, update):
+        # 后关联，否则会触发更新
+        day.valueChanged[int].connect(update(item, "day"))
+        hour.valueChanged[int].connect(update(item, "hour"))
+        minute.valueChanged[int].connect(update(item, "minute"))
+        second.valueChanged[int].connect(update(item, "second"))
+
+    def update_time_box_by_record(self, now, item, day, hour, minute, second):
+        exist = self._record[item]
+        remain_d, remain_h, remain_m, remain_s = get_remain_time(
+            exist.t, now, exist.day, exist.hour, exist.minute, exist.second)
+        day.setValue(remain_d)
+        hour.setValue(remain_h)
+        minute.setValue(remain_m)
+        second.setValue(remain_s)
 
     def _init_time_input(self):
         day = QSpinBox(self)
