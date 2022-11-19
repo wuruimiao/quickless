@@ -72,13 +72,15 @@ class TimeRecord(object):
 class ChongFan(QDialog):
     def __init__(self, parent=None):
         super(ChongFan, self).__init__(parent)
-        self._db_name = "chongfandiguo.db"
-        self._data = get_data(self._db_name)
         self._item = ("建造1", "建造2", "学院", "城堡", "募兵1", "募兵2", "治疗", "免费招募")
-        if self._data is None:
+
+        self._db_name = "chongfandiguo.db"
+        d = get_data(self._db_name)
+        if d is None:
             self._record = defaultdict(TimeRecord)
         else:
-            self._record = self._data
+            self._record = d
+
         self._init_ui()
 
     def _init_ui(self):
@@ -136,6 +138,7 @@ class ChongFan(QDialog):
             second.valueChanged[int].connect(update(item, "second"))
 
             lb = QPushButton(f"{item}耗时", self)
+            # 这里只关联到了最后一个day,hour,minute
             lb.clicked.connect(lambda x: day.setValue(0) or hour.setValue(11) or minute.setValue(30))
 
             make_one_line([lb,
