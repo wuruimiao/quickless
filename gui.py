@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QDateTime
 from PyQt5.QtWidgets import (QWidget, QPushButton, QDesktopWidget,
                              QHBoxLayout, QVBoxLayout, QApplication, QLineEdit, QLCDNumber, QLabel, QTimeEdit,
                              QMainWindow, QTabWidget,
-                             QDialog, QBoxLayout)
+                             QDialog, QBoxLayout, QSplitter)
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QIntValidator
@@ -87,11 +87,11 @@ class ChongFan(QDialog):
         left_box = self._init_record_part(now)
         right_box = self._init_ordered_time_part(now)
 
-        box2 = QHBoxLayout()
-        box2.addLayout(left_box)
-        box2.addStretch(1)
-        box2.addLayout(right_box)
-        self.setLayout(box2)
+        box = QHBoxLayout()
+        box.addLayout(left_box)
+        box.addStretch(1)
+        box.addLayout(right_box)
+        self.setLayout(box)
 
     def _update_by_key_attr(self, record_key, record_item_attr, context):
         self._record[record_key].set_by_key(record_item_attr, context)
@@ -151,6 +151,14 @@ class ChongFan(QDialog):
         return box
 
     def _init_ordered_time_part(self, now):
+        """
+        初始化右边，根据时间排序的事件
+        Args:
+            now:
+
+        Returns:
+
+        """
         box = QVBoxLayout()
         going = []
         finished = []
