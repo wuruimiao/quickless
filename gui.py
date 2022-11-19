@@ -1,18 +1,16 @@
 import sys
-import time
 from collections import defaultdict
 from datetime import datetime, timedelta
 from typing import List
-from PyQt5.QtCore import Qt, QDateTime
-from PyQt5.QtWidgets import (QWidget, QPushButton, QDesktopWidget,
-                             QHBoxLayout, QVBoxLayout, QApplication, QLineEdit, QLCDNumber, QLabel, QTimeEdit,
-                             QMainWindow, QTabWidget,
-                             QDialog, QBoxLayout, QSplitter)
-from PyQt5.QtWidgets import *
+
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QIntValidator
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (QPushButton, QDesktopWidget,
+                             QHBoxLayout, QVBoxLayout, QLabel)
+
 from utils.data_helper import store, get_data
-from utils.time_helper import get_pass_time, get_remain_time, format_time
+from utils.time_helper import get_remain_time, format_time
 
 
 def make_one_line(widgets: List[QWidget], box: QBoxLayout) -> QBoxLayout:
@@ -29,10 +27,11 @@ def highlight(widget: QWidget):
 
 
 class TimeRecord(object):
-    def __init__(self, day: int = 0, hour: int = 0, minute: int = 0):
+    def __init__(self, day: int = 0, hour: int = 0, minute: int = 0, second: int = 0):
         self.day = day
         self.hour = hour
         self.minute = minute
+        self.second = second
         self.t = datetime.now()
         self.empty = True
 
@@ -119,26 +118,22 @@ class ChongFan(QDialog):
 
         box = QVBoxLayout()
         for item in self._item:
-            day = QSpinBox(self)
-
-            hour = QSpinBox(self)
-            hour.setRange(0, 59)
-
-            minute = QSpinBox(self)
-            minute.setRange(0, 59)
-
+            day, hour, minute, second = self._init_time_input()
             if item in self._record and not self._record[item].empty:
                 # 再次判断以免直接初始化记录
                 exist = self._record[item]
-                remain_d, remain_h, remain_m = get_remain_time(exist.t, now, exist.day, exist.hour, exist.minute)
+                remain_d, remain_h, remain_m, remain_s = get_remain_time(
+                    exist.t, now, exist.day, exist.hour, exist.minute, exist.second)
                 day.setValue(remain_d)
                 hour.setValue(remain_h)
                 minute.setValue(remain_m)
+                second.setValue(remain_s)
 
             # 后关联，否则会触发更新
             day.valueChanged[int].connect(update(item, "day"))
             hour.valueChanged[int].connect(update(item, "hour"))
             minute.valueChanged[int].connect(update(item, "minute"))
+            second.valueChanged[int].connect(update(item, "second"))
 
             lb = QPushButton(f"{item}耗时", self)
             lb.clicked.connect(lambda x: day.setValue(0) or hour.setValue(11) or minute.setValue(30))
@@ -147,9 +142,20 @@ class ChongFan(QDialog):
                            day, QLabel("天", self),
                            hour, QLabel("时", self),
                            minute, QLabel("分", self),
+                           second, QLabel("秒", self),
                            ], box)
         box.addStretch(1)
         return box
+
+    def _init_time_input(self):
+        day = QSpinBox(self)
+        hour = QSpinBox(self)
+        hour.setRange(0, 59)
+        minute = QSpinBox(self)
+        minute.setRange(0, 59)
+        second = QSpinBox(self)
+        second.setRange(0, 59)
+        return day, hour, minute, second
 
     def _init_ordered_time_part(self, now):
         """
@@ -179,7 +185,8 @@ class ChongFan(QDialog):
         box.addWidget(QLabel("\n", self))
 
         t = [QLabel(f"{item[1]}{item[0]}将完成", self) for item in going]
-        t[0] = highlight(t[0])
+        if len(t) > 0:
+            t[0] = highlight(t[0])
         self.display_labels(box, t, "进行中")
         box.addWidget(QLabel("\n", self))
         box.addStretch(1)
