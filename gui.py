@@ -85,7 +85,7 @@ class ChongFan(QDialog):
         now = datetime.now()
 
         left_box = self._init_record_part(now)
-        right_box = self._init_order_time_part(now)
+        right_box = self._init_ordered_time_part(now)
 
         box2 = QHBoxLayout()
         box2.addLayout(left_box)
@@ -150,7 +150,7 @@ class ChongFan(QDialog):
         box.addStretch(1)
         return box
 
-    def _init_order_time_part(self, now):
+    def _init_ordered_time_part(self, now):
         box = QVBoxLayout()
         going = []
         finished = []
