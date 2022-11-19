@@ -69,6 +69,15 @@ class TimeRecord(object):
         return self.__str()
 
 
+def init_time_box(day: QSpinBox, hour: QSpinBox, minute: QSpinBox, second: QSpinBox):
+    def _init():
+        day.setValue(0)
+        hour.setValue(11)
+        minute.setValue(30)
+        second.setValue(0)
+    return _init
+
+
 class ChongFan(QDialog):
     def __init__(self, parent=None):
         super(ChongFan, self).__init__(parent)
@@ -101,14 +110,6 @@ class ChongFan(QDialog):
         print(self._record)
         store(self._record, self._db_name)
         return True
-
-    def init_time_box(self, item: str, day: QSpinBox, hour: QSpinBox, minute: QSpinBox, second: QSpinBox):
-        def _init():
-            day.setValue(0)
-            hour.setValue(11)
-            minute.setValue(30)
-            second.setValue(0)
-        return _init
 
     def _init_record_part(self, now):
         """
@@ -146,7 +147,7 @@ class ChongFan(QDialog):
             second.valueChanged[int].connect(update(item, "second"))
 
             btn = QPushButton(f"{item}耗时", self)
-            btn.clicked.connect(self.init_time_box(item, day, hour, minute, second))
+            btn.clicked.connect(init_time_box(day, hour, minute, second))
 
             make_one_line([btn,
                            day, QLabel("天", self),
