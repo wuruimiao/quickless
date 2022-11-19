@@ -36,5 +36,5 @@ def get_remain_time(early: datetime, latest: datetime, day: int, hour: int, minu
     """
     deadline = early + timedelta(days=day, hours=hour, minutes=minute, seconds=second)
     if deadline <= latest:
-        return 0, 0, 0
+        return 0, 0, 0, 0
     return get_pass_time(latest, deadline)
