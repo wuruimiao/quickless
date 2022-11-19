@@ -60,7 +60,7 @@ class TimeRecord(object):
         return format_time(self.finish_time, "%Y-%m-%d %H:%M")
 
     def __str(self):
-        return f"day={self.day} hour={self.hour} minute={self.minute} time={format_time(self.t)}"
+        return f"day={self.day} hour={self.hour} minute={self.minute} second={self.second} time={format_time(self.t)}"
 
     def __str__(self):
         return self.__str()
@@ -102,6 +102,14 @@ class ChongFan(QDialog):
         store(self._record, self._db_name)
         return True
 
+    def init_time_box(self, item: str, day: QSpinBox, hour: QSpinBox, minute: QSpinBox, second: QSpinBox):
+        def _init():
+            day.setValue(0)
+            hour.setValue(11)
+            minute.setValue(30)
+            second.setValue(0)
+        return _init
+
     def _init_record_part(self, now):
         """
         初始化左侧记录面板
@@ -137,11 +145,10 @@ class ChongFan(QDialog):
             minute.valueChanged[int].connect(update(item, "minute"))
             second.valueChanged[int].connect(update(item, "second"))
 
-            lb = QPushButton(f"{item}耗时", self)
-            # 这里只关联到了最后一个day,hour,minute
-            lb.clicked.connect(lambda x: day.setValue(0) or hour.setValue(11) or minute.setValue(30))
+            btn = QPushButton(f"{item}耗时", self)
+            btn.clicked.connect(self.init_time_box(item, day, hour, minute, second))
 
-            make_one_line([lb,
+            make_one_line([btn,
                            day, QLabel("天", self),
                            hour, QLabel("时", self),
                            minute, QLabel("分", self),
