@@ -23,8 +23,9 @@ def make_one_line(widgets: List[QWidget], box: QBoxLayout) -> QBoxLayout:
     return inbox
 
 
-def default_record():
-    return [0, 0, 0, datetime(1, 1, 1)]
+def highlight(widget: QWidget):
+    widget.setStyleSheet("color:red")
+    return widget
 
 
 class TimeRecord(object):
@@ -74,7 +75,7 @@ class ChongFan(QDialog):
         super(ChongFan, self).__init__(parent)
         self._db_name = "chongfandiguo.db"
         self._data = get_data(self._db_name)
-        self._item = ("建造1", "建造2", "学院", "城堡", "募兵1", "募兵2", "治疗", "招募")
+        self._item = ("建造1", "建造2", "学院", "城堡", "募兵1", "募兵2", "治疗", "免费招募")
         if self._data is None:
             self._record = defaultdict(TimeRecord)
         else:
@@ -162,16 +163,25 @@ class ChongFan(QDialog):
         box = QVBoxLayout()
         going = []
         finished = []
+
         for key, value in self._record.items():
             if value.is_null:
                 continue
+            _item = (key, value.finish_time_str)
             if value.finished(now):
-                finished.append(QLabel(f"{key} {value.finish_time_str} 结束", self))
+                finished.append(_item)
             else:
-                going.append(QLabel(f"{key} {value.finish_time_str} 结束", self))
-        self.display_labels(box, finished, "已完成")
+                going.append(_item)
+        finished.sort(key=lambda x: x[1])
+        going.sort(key=lambda x: x[1])
+
+        self.display_labels(box, [QLabel(f"{item[1]}{item[0]}已完成", self) for item in finished], "已完成")
         box.addWidget(QLabel("\n", self))
-        self.display_labels(box, going, "进行中")
+
+        t = [QLabel(f"{item[1]}{item[0]}将完成", self) for item in going]
+        t[0] = highlight(t[0])
+        self.display_labels(box, t, "进行中")
+        box.addWidget(QLabel("\n", self))
         box.addStretch(1)
         return box
 
