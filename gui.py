@@ -140,7 +140,7 @@ class ChongFan(QDialog):
             hour.valueChanged[int].connect(update(item, "hour"))
             minute.valueChanged[int].connect(update(item, "minute"))
 
-            lb = QPushButton(f"{item}耗时：", self)
+            lb = QPushButton(f"{item}耗时", self)
             lb.clicked.connect(lambda x: day.setValue(0) or hour.setValue(11) or minute.setValue(30))
 
             make_one_line([lb,
