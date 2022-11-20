@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
-from utils.mouse_keyboard_js import refresh_page,\
-    goto_tool_from_video_page, wait_page, download_from_tool_page, \
+
+from utils.mouse_keyboard_js import refresh_page, \
+    download_from_tool_page, \
     cancel_download_for_exist, download_from_video_page, focus_page, \
     back_origin_page
 

@@ -1,11 +1,13 @@
 import time
-
 import pyautogui
-from pynput.keyboard import Controller, Key, Listener
 
 
-# 参考文档：https://www.jianshu.com/p/e4f4ca3f6b52
+# 键盘鼠标参考文档：https://www.jianshu.com/p/e4f4ca3f6b52
 
+"""
+将页面放在屏幕右半边，下面的位置就是对的
+TODO：使用相对位置
+"""
 
 def wait_page():
     time.sleep(1)
