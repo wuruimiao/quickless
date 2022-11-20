@@ -1,28 +1,12 @@
-import time
 import pyautogui
 
-# 键盘鼠标参考文档：https://www.jianshu.com/p/e4f4ca3f6b52
+from utils.chrome_keyboard import wait_page, close_page, refresh_page
+
 
 """
 将页面放在屏幕右半边，下面的位置就是对的
 TODO：使用相对位置
 """
-
-
-def wait_page():
-    time.sleep(1)
-
-
-def close_page():
-    pyautogui.hotkey('ctrl', 'w')
-
-
-def back_page():
-    pyautogui.hotkey('altleft', 'left')
-
-def refresh_page():
-    pyautogui.hotkey('ctrl', 'r')
-    wait_page()
 
 
 def focus_page():
@@ -61,9 +45,6 @@ def download_from_tool_page():
 
     # 下载
     pyautogui.click(3142, 1515)
-
-
-
 
 
 def download_from_video_page():

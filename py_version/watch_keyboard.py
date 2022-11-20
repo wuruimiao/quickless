@@ -2,8 +2,9 @@
 import pyautogui
 from pynput.keyboard import Key, Listener, Controller
 
-from utils.mouse_keyboard_js import refresh_page, goto_tool_from_video_page, wait_page, download_from_tool_page, \
+from utils.mouse_keyboard_js import goto_tool_from_video_page, download_from_tool_page, \
     cancel_download_for_exist
+from utils.chrome_keyboard import wait_page, refresh_page
 
 
 def on_press(key):
