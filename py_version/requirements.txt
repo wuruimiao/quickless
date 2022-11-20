@@ -1,0 +1,4 @@
+PyQt5~=5.15.7
+PyAutoGUI~=0.9.53
+pynput~=1.7.6
+PyQtWebEngine~=5.15.6
