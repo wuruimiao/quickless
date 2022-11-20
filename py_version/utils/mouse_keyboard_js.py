@@ -1,7 +1,6 @@
 import time
 import pyautogui
 
-
 # 键盘鼠标参考文档：https://www.jianshu.com/p/e4f4ca3f6b52
 
 """
@@ -9,9 +8,17 @@ import pyautogui
 TODO：使用相对位置
 """
 
+
 def wait_page():
     time.sleep(1)
 
+
+def close_page():
+    pyautogui.hotkey('ctrl', 'w')
+
+
+def back_page():
+    pyautogui.hotkey('altleft', 'left')
 
 def refresh_page():
     pyautogui.hotkey('ctrl', 'r')
@@ -19,7 +26,7 @@ def refresh_page():
 
 
 def focus_page():
-    pyautogui.click(1946, 787)
+    pyautogui.click(3782, 788)
 
 
 def goto_tool_from_video_page():
@@ -29,7 +36,7 @@ def goto_tool_from_video_page():
 def cancel_download_for_exist():
     pyautogui.typewrite(["enter"])
     pyautogui.click(3001, 850)
-    pyautogui.hotkey('ctrl', 'w')
+    close_page()
 
 
 def download_from_tool_page():
@@ -56,10 +63,7 @@ def download_from_tool_page():
     pyautogui.click(3142, 1515)
 
 
-def back_origin_page():
-    # 上一个页面，返回前一页
-    pyautogui.hotkey('shiftleft', 'j')
-    pyautogui.click(1957, 99)
+
 
 
 def download_from_video_page():
