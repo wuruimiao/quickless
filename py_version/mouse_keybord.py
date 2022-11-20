@@ -92,9 +92,5 @@ if __name__ == '__main__':
     kb = Controller()
     print(pyautogui.size())
     print(pyautogui.position())
-    pyautogui.hotkey('alt', 'tab')
-    i = 0
-
-    pyautogui.hotkey('ctrl', 'v')
     # 开始监听,按esc退出监听
     start_listen()
