@@ -3,6 +3,7 @@ import time
 import pyautogui
 from pynput.keyboard import Controller, Key, Listener
 
+# 参考文档：https://www.jianshu.com/p/e4f4ca3f6b52
 
 # 监听按压
 def on_press(key):
@@ -72,7 +73,7 @@ def on_release(key):
     elif key == Key.pause:
         print("按下了pause")
         cancel_download_for_exist()
-    elif key == Key.esc:
+    elif key == Key.delete:
         # 停止监听
         quit()
 
