@@ -3,10 +3,10 @@ from datetime import datetime
 
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QSpinBox, QVBoxLayout, QPushButton, QLabel
 
-from py_version.model.time_record import TimeRecord
-from py_version.utils.data_helper import get_data, store
-from py_version.utils.time_helper import get_remain_time
-from py_version.view_gui.common import make_one_line, highlight
+from model.time_record import TimeRecord
+from utils.data_helper import get_data, store
+from utils.time_helper import get_remain_time
+from view_gui.common import make_one_line, highlight
 
 
 class ChongFan(QDialog):
