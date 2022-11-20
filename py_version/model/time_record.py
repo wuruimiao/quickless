@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from py_version.utils.time_helper import format_time
+from utils.time_helper import format_time
 
 
 class TimeRecord(object):
