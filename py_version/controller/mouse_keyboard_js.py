@@ -44,7 +44,7 @@ def download_from_tool_page():
     pyautogui.typewrite(['enter'])
 
     # 下载
-    pyautogui.click(3142, 1515)
+    pyautogui.click(3178, 1509)
 
 
 def download_from_video_page():

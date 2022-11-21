@@ -1,5 +1,6 @@
 import sys
 
+import pyautogui
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QDesktopWidget, QTabWidget, QApplication)
 
@@ -35,6 +36,7 @@ class Example(QTabWidget):
 
 
 if __name__ == '__main__':
+    print(pyautogui.position())
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
