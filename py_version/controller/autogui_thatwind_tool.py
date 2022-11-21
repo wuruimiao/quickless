@@ -26,6 +26,7 @@ def download_from_tool_page():
     pyautogui.click(158, 1389)
     wait_page()
     pyautogui.typewrite(['enter'])
-
+    
+    wait_page()
     # 下载
     pyautogui.click(1285, 1567)
