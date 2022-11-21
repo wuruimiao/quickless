@@ -28,4 +28,4 @@ def download_from_tool_page():
     pyautogui.typewrite(['enter'])
 
     # 下载
-    pyautogui.click(1283, 1506)
+    pyautogui.click(1294, 1573)
