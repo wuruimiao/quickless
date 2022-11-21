@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QDialog, QHBoxLayout, QSpinBox, QVBoxLayout, QPushBu
 from model.time_record import TimeRecord
 from utils.data_helper import get_data, store
 from utils.time_helper import get_remain_time
-from view_gui.common import make_one_line, highlight
+from utils.gui_helper import make_one_line, highlight
 
 
 class ChongFan(QDialog):

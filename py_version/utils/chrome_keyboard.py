@@ -10,7 +10,7 @@ chrome快捷键：https://support.google.com/chrome/answer/10483214?hl=zh-Hans
 
 
 def wait_page():
-    time.sleep(1)
+    time.sleep(2)
 
 
 def close_page():

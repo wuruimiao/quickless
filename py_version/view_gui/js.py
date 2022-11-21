@@ -1,13 +1,13 @@
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
-from utils.mouse_keyboard_js import download_from_tool_page, \
+from controller.mouse_keyboard_js import download_from_tool_page, \
     cancel_download_for_exist, download_from_video_page, focus_page
 from utils.chrome_keyboard import close_page, back_page, refresh_page, pre_page
 
 
-class Pian(QDialog):
+class JS(QDialog):
     def __init__(self, parent=None):
-        super(Pian, self).__init__(parent)
+        super(JS, self).__init__(parent)
         btn = QPushButton("视频页下载", self)
         btn.clicked.connect(download_from_video_page)
         btn1 = QPushButton("视频页下载并关闭视频页", self)

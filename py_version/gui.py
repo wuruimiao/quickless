@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QDesktopWidget, QTabWidget, QApplication)
 
 from view_gui.chong_fan import ChongFan
-from view_gui.video import Pian
+from view_gui.js import JS
 
 
 class Example(QTabWidget):
@@ -17,7 +17,7 @@ class Example(QTabWidget):
         self.center()
         # self.statusBar().showMessage('Ready')
         self.chong_fan = ChongFan()
-        self.pian = Pian()
+        self.pian = JS()
         self.addTab(self.chong_fan, "重返帝国")
         self.addTab(self.pian, "视频")
         self.show()
