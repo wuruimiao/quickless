@@ -5,7 +5,7 @@ from utils.chrome_keyboard import close_page, wait_page
 
 def cancel_download_for_exist():
     pyautogui.typewrite(["enter"])
-    pyautogui.click(3001, 850)
+    pyautogui.click(1110, 856)
     close_page()
 
 
@@ -21,12 +21,9 @@ def download_from_tool_page():
     pyautogui.typewrite(['backspace'])
     pyautogui.typewrite("1")
     pyautogui.typewrite("5")
-
-    # 选择保存目录
-    pyautogui.click(2098, 1388)
+    pyautogui.click(158, 1389)
     wait_page()
     pyautogui.typewrite(['enter'])
 
     # 下载
-    pyautogui.click(3178, 1506)
-    pyautogui.click(3178, 1506)
+    pyautogui.click(1283, 1506)
