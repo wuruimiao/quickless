@@ -11,16 +11,18 @@ def cancel_download_for_exist():
 
 def download_from_tool_page():
     # 同时请求片段数框，改成3
-    pyautogui.click(2318, 996)
+    pyautogui.click(140, 998)
     pyautogui.typewrite(['backspace'])
     pyautogui.typewrite(['backspace'])
     pyautogui.typewrite("3")
 
     # 最大重试次数，改成15
-    pyautogui.click(2333, 1142)
+    pyautogui.click(140, 1142)
     pyautogui.typewrite(['backspace'])
     pyautogui.typewrite("1")
     pyautogui.typewrite("5")
+
+    # 选择保存目录
     pyautogui.click(158, 1389)
     wait_page()
     pyautogui.typewrite(['enter'])
