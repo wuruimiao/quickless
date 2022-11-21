@@ -1,7 +1,8 @@
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
-from controller.mouse_keyboard_js import download_from_tool_page, \
-    cancel_download_for_exist, download_from_video_page, focus_page
+from controller.autogui_js import download_from_video_page
+from controller.autogui_chrome import focus_page
+from controller.autogui_thatwind_tool import cancel_download_for_exist, download_from_tool_page
 from utils.chrome_keyboard import close_page, back_page, refresh_page, pre_page
 
 
