@@ -51,25 +51,31 @@
 #     app = QApplication(sys.argv)
 #     ex = Example()
 #     sys.exit(app.exec_())
+import time
+
+import pyautogui
+
+# import sys
+# from PyQt5.QtCore import *
+# from PyQt5.QtWidgets import *
+# from PyQt5.QtWebEngineWidgets import QWebEngineView
+#
+# class MainWindow(QMainWindow):
+#     def __init__(self):
+#         super(MainWindow, self).__init__()
+#         self.setWindowTitle('百度')  #窗口标题
+#         self.setGeometry(5,30,1355,730)  #窗口的大小和位置设置
+#         self.browser=QWebEngineView()
+#         #加载外部的web界面
+#         self.browser.load(QUrl('https://gamer.qq.com/v2/cloudgame/game/95818?ichannel=pcgames0Fpcgames1'))
+#         self.setCentralWidget(self.browser)
+# if __name__ == '__main__':
+#     app=QApplication(sys.argv)
+#     win=MainWindow()
+#     win.show()
+#     app.exit(app.exec_())
 
 
-import sys
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtWebEngineWidgets import QWebEngineView
-# from PyQt5.QtWebEngine import QtWebEngine
-
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setWindowTitle('百度')  #窗口标题
-        self.setGeometry(5,30,1355,730)  #窗口的大小和位置设置
-        self.browser=QWebEngineView()
-        #加载外部的web界面
-        self.browser.load(QUrl('https://gamer.qq.com/v2/cloudgame/game/95818?ichannel=pcgames0Fpcgames1'))
-        self.setCentralWidget(self.browser)
-if __name__ == '__main__':
-    app=QApplication(sys.argv)
-    win=MainWindow()
-    win.show()
-    app.exit(app.exec_())
+while True:
+    print(pyautogui.position())
+    time.sleep(1)

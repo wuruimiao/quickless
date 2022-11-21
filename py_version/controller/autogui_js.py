@@ -12,7 +12,10 @@ TODO：使用相对位置
 
 
 def goto_tool_from_video_page():
-    pyautogui.click(3695, 340)
+    # 放右边
+    # pyautogui.click(3697, 352)
+    # 放左边
+    pyautogui.click(1767, 352)
 
 
 def download_from_video_page():

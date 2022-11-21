@@ -2,4 +2,4 @@ import pyautogui
 
 
 def focus_page():
-    pyautogui.click(3782, 788)
+    pyautogui.click(1886, 419)

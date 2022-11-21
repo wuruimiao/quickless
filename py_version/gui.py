@@ -37,6 +37,7 @@ class Example(QTabWidget):
 
 if __name__ == '__main__':
     print(pyautogui.position())
+    print(pyautogui.size())
     app = QApplication(sys.argv)
     ex = Example()
     sys.exit(app.exec_())
