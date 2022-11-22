@@ -28,5 +28,6 @@ def download_from_tool_page():
     pyautogui.typewrite(['enter'])
     
     wait_page()
-    # 下载
-    pyautogui.click(1285, 1567)
+    # 下载，按钮位置可能变化，多点几次
+    for y in range(1525, 1567, 6):
+        pyautogui.click(1285, y)
