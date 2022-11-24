@@ -7,6 +7,6 @@ def init_db():
     return scoped_session(sessionmaker(bind=engine))
 
 
-engine = create_engine("sqlite:///local_file.db", echo=True, future=True)
+engine = create_engine("sqlite:///local_file.db", echo=False)
 db_session = scoped_session(sessionmaker(bind=engine))
 # db_session = init_db()

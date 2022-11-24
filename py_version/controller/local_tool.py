@@ -39,8 +39,9 @@ def compute_file_finger():
     for driver in dir_names:
         for f_name in get_local_file_names(driver):
             if file_finger_exist(f_name):
+                logger.info(f"{f_name} exist")
                 continue
-            logger.info(f_name)
+            logger.info(f"{f_name} will compute")
             finger = get_file_finger(f_name)
             created_at = updated_at = get_now_str()
             m = FileFinger(file_path=f_name, finger=finger, created_at=created_at, updated_at=updated_at)
