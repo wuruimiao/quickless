@@ -4,9 +4,9 @@ from datetime import datetime
 from PyQt5.QtWidgets import QDialog, QHBoxLayout, QSpinBox, QVBoxLayout, QPushButton, QLabel
 
 from model.time_record import TimeRecord
-from utils.data_helper import get_data, store
-from utils.time_helper import get_remain_time
-from utils.gui_helper import make_one_line, highlight
+from utils.data import get_data, store
+from utils.time import get_remain_time
+from utils.gui import make_one_line, highlight
 
 
 class ChongFan(QDialog):

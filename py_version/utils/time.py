@@ -6,6 +6,14 @@ def format_time(t: datetime, f: str = "%Y-%m-%d %H:%M:%S") -> str:
     return t.strftime(f)
 
 
+def get_now():
+    return datetime.now()
+
+
+def get_now_str() -> str:
+    return format_time(get_now())
+
+
 def get_pass_time(early: datetime, latest: datetime) -> Tuple[int, int, int, int]:
     """
     获取已经过去了多少天、时、分
