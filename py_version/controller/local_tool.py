@@ -1,7 +1,8 @@
 import logging
 import os
 import hashlib
-
+from sqlalchemy.orm import aliased
+from sqlalchemy import and_
 from db.connnection import db_session
 from model.all import sync_table, FileFinger
 from utils.time import get_now_str
@@ -25,8 +26,8 @@ def get_file_finger(f_name: str):
 
 
 def file_finger_exist(f_name: str) -> bool:
-    return db_session.query(FileFinger.file_path)\
-               .filter_by(file_path=f_name)\
+    return db_session.query(FileFinger.file_path) \
+               .filter_by(file_path=f_name) \
                .first() is not None
 
 
@@ -47,3 +48,13 @@ def compute_file_finger():
             m = FileFinger(file_path=f_name, finger=finger, created_at=created_at, updated_at=updated_at)
             db_session.add(m)
             db_session.commit()
+
+
+def get_same_file():
+    f1 = aliased(FileFinger, name="f1")
+    f2 = aliased(FileFinger, name="f2")
+    files = db_session.query(f1.file_path, f2.file_path) \
+        .join(f2, and_(f1.finger == f2.finger)) \
+        .all()
+    for f in files:
+        logger.info(f"{f[0]} \n {f[1]} \n is same========")

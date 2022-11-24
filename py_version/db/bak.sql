@@ -4,7 +4,9 @@ create table file_finger(
     finger TEXT NOT NULL,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL
-)
+);
+
+create index idx_finger on file_finger(finger);
 
 .tables
 
