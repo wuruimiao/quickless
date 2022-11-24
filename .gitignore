@@ -133,3 +133,4 @@ dmypy.json
 node_modules
 package-lock.json
 *.db
+*.mp4
