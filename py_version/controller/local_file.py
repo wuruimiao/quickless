@@ -11,10 +11,12 @@ from utils.time import get_now_str
 
 logger = logging.getLogger(__name__)
 
-dir_names = ("E:\BaiduNetdiskDownload",
-             "F:\BaiduNetdiskDownload",
-             "G:\BaiduNetdiskDownload",
-             "H:\BaiduNetdiskDownload")
+dir_names = (
+    "G:\\BaiduNetdiskDownload",
+    "E:\\BaiduNetdiskDownload",
+    "F:\\BaiduNetdiskDownload",
+    "H:\\BaiduNetdiskDownload"
+)
 
 
 def get_local_file_names(dir_name: str):
@@ -65,6 +67,18 @@ def get_same_file():
 def del_same_file():
     files = get_same_file()
     for f1, f2 in files:
+        need_del = True
+        if not os.path.exists(f1):
+            # f1不存在，直接删除
+            del_file(f1)
+            need_del = False
+        if not os.path.exists(f2):
+            del_file(f2)
+            need_del = False
+            continue
+
+        if not need_del:
+            continue
         del_f = max([f1, f2], key=len)
         logger.info(f"\n{f1}\n{f2}\n is same========")
         logger.info(f"will del\n{del_f}")
@@ -73,16 +87,18 @@ def del_same_file():
 
 def del_file(f_path: str):
     db_session.query(FileFinger).filter_by(file_path=f_path).delete()
-    new_f_path = f"D:\\code{f_path[2:]}"
-    f_base_path = os.path.split(new_f_path)[0]
-    if not os.path.exists(f_base_path):
-        os.makedirs(os.path.split(new_f_path)[0])
-    if os.path.exists(new_f_path):
-        # 新目录已存在，直接删除
-        if os.path.exists(f_path):
-            shutil.rmtree(f_path)
-    else:
-        shutil.move(f_path, new_f_path)
+    if os.path.exists(f_path):
+        new_f_path = f"D:\\code{f_path[2:]}"
+        f_base_path = os.path.split(new_f_path)[0]
+        if not os.path.exists(f_base_path):
+            # 新目录不存在，新建
+            os.makedirs(os.path.split(new_f_path)[0])
+        if os.path.exists(new_f_path):
+            # 新目录已存在，直接删除
+            if os.path.exists(f_path):
+                shutil.rmtree(f_path)
+        else:
+            shutil.move(f_path, new_f_path)
     db_session.commit()
 
 
@@ -97,3 +113,8 @@ def del_empty_file():
                 continue
             logger.info(f"{f_path} will be removed")
             del_file(f_path)
+
+
+def rename_path():
+    # 重命名文件夹时，也要更新数据库，不然数据会不准
+    pass
