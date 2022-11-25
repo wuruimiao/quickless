@@ -82,7 +82,7 @@ def del_empty_file():
                 # logger.info(f"{f_path} is baidu, will not del")
                 continue
             logger.info(f"{f_path} will be removed")
-                # os.remove(f_path)
+            db_session.query(FileFinger).filter_by(file_path=f_path).delete()
             new_f_path = f"D:\\code{f_path[2:]}"
             logger.info(f"{new_f_path}")
             os.makedirs(new_f_path)
