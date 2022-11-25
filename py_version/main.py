@@ -1,6 +1,6 @@
 import sys
 from view_gui.main import run_gui
-from controller.local_file import compute_file_finger, del_empty_file, get_same_file
+from controller.local_file import compute_file_finger, del_empty_file, get_same_file, del_same_file
 from controller.watch_keyboard import watch_keyboard
 
 if __name__ == '__main__':
@@ -18,5 +18,7 @@ if __name__ == '__main__':
         get_same_file()
     elif command == "watch":
         watch_keyboard()
+    elif command == "del_same":
+        del_same_file()
 
 

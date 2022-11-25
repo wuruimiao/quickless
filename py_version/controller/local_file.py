@@ -59,16 +59,31 @@ def get_same_file():
     files = db_session.query(f1.file_path, f2.file_path) \
         .join(f2, and_(f1.finger == f2.finger, f1.file_path != f2.file_path)) \
         .all()
-    for f in files:
-        logger.info(f"\n{f[0]} \n {f[1]} \n is same========")
+    return files
+
+
+def del_same_file():
+    files = get_same_file()
+    for f1, f2 in files:
+        del_f = max([f1, f2], key=len)
+        logger.info(f"\n{f1}\n{f2}\n is same========")
+        logger.info(f"will del\n{del_f}")
+        del_file(del_f)
 
 
 def del_file(f_path: str):
     db_session.query(FileFinger).filter_by(file_path=f_path).delete()
     new_f_path = f"D:\\code{f_path[2:]}"
-    logger.info(f"{new_f_path}")
-    os.makedirs(new_f_path)
-    shutil.move(f_path, new_f_path)
+    f_base_path = os.path.split(new_f_path)[0]
+    if not os.path.exists(f_base_path):
+        os.makedirs(os.path.split(new_f_path)[0])
+    if os.path.exists(new_f_path):
+        # 新目录已存在，直接删除
+        if os.path.exists(f_path):
+            shutil.rmtree(f_path)
+    else:
+        shutil.move(f_path, new_f_path)
+    db_session.commit()
 
 
 def del_empty_file():
