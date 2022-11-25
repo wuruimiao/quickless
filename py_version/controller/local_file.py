@@ -63,13 +63,12 @@ def get_same_file():
         logger.info(f"\n{f[0]} \n {f[1]} \n is same========")
 
 
-def del_file(file_path: str):
-    os.remove(file_path)
-    db_session.delete(FileFinger).filter_by(file_path=file_path).delete()
-
-
-def rename_file(file_path: str, new_file_name: str):
-    pass
+def del_file(f_path: str):
+    db_session.query(FileFinger).filter_by(file_path=f_path).delete()
+    new_f_path = f"D:\\code{f_path[2:]}"
+    logger.info(f"{new_f_path}")
+    os.makedirs(new_f_path)
+    shutil.move(f_path, new_f_path)
 
 
 def del_empty_file():
@@ -82,8 +81,4 @@ def del_empty_file():
                 # logger.info(f"{f_path} is baidu, will not del")
                 continue
             logger.info(f"{f_path} will be removed")
-            db_session.query(FileFinger).filter_by(file_path=f_path).delete()
-            new_f_path = f"D:\\code{f_path[2:]}"
-            logger.info(f"{new_f_path}")
-            os.makedirs(new_f_path)
-            shutil.move(f_path, new_f_path)
+            del_file(f_path)
