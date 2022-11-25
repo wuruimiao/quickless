@@ -1,6 +1,8 @@
 import logging
 import os
 import hashlib
+import shutil
+
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from db.connnection import db_session
@@ -72,12 +74,16 @@ def rename_file(file_path: str, new_file_name: str):
 
 def del_empty_file():
     for driver in dir_names:
-        for f_name in get_local_file_names(driver):
-            if os.path.getsize(f_name):
+        for f_path in get_local_file_names(driver):
+            if os.path.getsize(f_path):
                 continue
-            f_path = os.path.split(f_name)
-            if f_path[-1].endswith(("")):
+            f_paths = os.path.split(f_path)
+            if "downloading" in f_paths[-1] or "baiduyun" in f_paths[-1]:
+                # logger.info(f"{f_path} is baidu, will not del")
                 continue
             logger.info(f"{f_path} will be removed")
-                # os.remove(f_name)
-
+                # os.remove(f_path)
+            new_f_path = f"D:\\code{f_path[2:]}"
+            logger.info(f"{new_f_path}")
+            os.makedirs(new_f_path)
+            shutil.move(f_path, new_f_path)

@@ -1,7 +1,7 @@
 import sys
 from view_gui.main import run_gui
 from controller.local_file import compute_file_finger, del_empty_file, get_same_file
-from controller.keyboard import watch_keyboard
+from controller.watch_keyboard import watch_keyboard
 
 if __name__ == '__main__':
     command = sys.argv
