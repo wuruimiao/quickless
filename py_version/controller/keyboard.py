@@ -2,8 +2,8 @@
 import pyautogui
 from pynput.keyboard import Key, Listener, Controller
 
-from controller.autogui_js import goto_tool_from_video_page
-from controller.autogui_thatwind_tool import cancel_download_for_exist, download_from_tool_page
+from controller.gui_js import goto_tool_from_video_page
+from controller.gui_thatwind_tool import cancel_download_for_exist, download_from_tool_page
 from utils.chrome_keyboard import wait_page, refresh_page
 
 

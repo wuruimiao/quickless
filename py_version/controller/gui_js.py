@@ -1,7 +1,7 @@
 import pyautogui
 
-from controller.autogui_chrome import focus_page
-from controller.autogui_thatwind_tool import download_from_tool_page
+from controller.gui_chrome import focus_page
+from controller.gui_thatwind_tool import download_from_tool_page
 from utils.chrome_keyboard import wait_page, refresh_page
 
 
