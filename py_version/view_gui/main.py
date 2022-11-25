@@ -35,7 +35,7 @@ class Example(QTabWidget):
         self.move(qr.topLeft())
 
 
-if __name__ == '__main__':
+def run_gui():
     print(pyautogui.position())
     print(pyautogui.size())
     app = QApplication(sys.argv)

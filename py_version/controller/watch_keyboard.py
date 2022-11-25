@@ -44,7 +44,7 @@ def start_listen():
         listener.join()
 
 
-if __name__ == '__main__':
+def watch_keyboard():
     """
     快捷键，操作网页视频下载
     """

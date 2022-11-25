@@ -9,6 +9,11 @@ from utils.time import get_now_str
 
 logger = logging.getLogger(__name__)
 
+dir_names = ("E:\BaiduNetdiskDownload",
+             "F:\BaiduNetdiskDownload",
+             "G:\BaiduNetdiskDownload",
+             "H:\BaiduNetdiskDownload")
+
 
 def get_local_file_names(dir_name: str):
     for root, ds, fs in os.walk(dir_name):
@@ -33,10 +38,6 @@ def file_finger_exist(f_name: str) -> bool:
 
 def compute_file_finger():
     sync_table()
-    dir_names = ("E:\BaiduNetdiskDownload",
-                 "F:\BaiduNetdiskDownload",
-                 "G:\BaiduNetdiskDownload",
-                 "H:\BaiduNetdiskDownload")
     for driver in dir_names:
         for f_name in get_local_file_names(driver):
             if file_finger_exist(f_name):
@@ -54,7 +55,29 @@ def get_same_file():
     f1 = aliased(FileFinger, name="f1")
     f2 = aliased(FileFinger, name="f2")
     files = db_session.query(f1.file_path, f2.file_path) \
-        .join(f2, and_(f1.finger == f2.finger)) \
+        .join(f2, and_(f1.finger == f2.finger, f1.file_path != f2.file_path)) \
         .all()
     for f in files:
-        logger.info(f"{f[0]} \n {f[1]} \n is same========")
+        logger.info(f"\n{f[0]} \n {f[1]} \n is same========")
+
+
+def del_file(file_path: str):
+    os.remove(file_path)
+    db_session.delete(FileFinger).filter_by(file_path=file_path).delete()
+
+
+def rename_file(file_path: str, new_file_name: str):
+    pass
+
+
+def del_empty_file():
+    for driver in dir_names:
+        for f_name in get_local_file_names(driver):
+            if os.path.getsize(f_name):
+                continue
+            f_path = os.path.split(f_name)
+            if f_path[-1].endswith(("")):
+                continue
+            logger.info(f"{f_path} will be removed")
+                # os.remove(f_name)
+
