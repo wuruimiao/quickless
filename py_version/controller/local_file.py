@@ -21,6 +21,10 @@ dir_names = (
 )
 
 
+def is_baiduyun_tmp(f_path):
+    return "baiduyun" in f_path or "downloading" in f_path
+
+
 def get_local_file_names(dir_name: str):
     for root, ds, fs in os.walk(dir_name):
         for f in fs:
@@ -81,6 +85,8 @@ def get_same_file():
 def del_same_file():
     files = get_same_file()
     for f1, f2 in files:
+        if is_baiduyun_tmp(f1) or is_baiduyun_tmp(f2):
+            continue
         need_del = True
         if not os.path.exists(f1):
             # f1不存在，直接删除
@@ -102,17 +108,18 @@ def del_same_file():
 def del_file(f_path: str):
     db_session.query(FileFinger).filter_by(file_path=f_path).delete()
     if os.path.exists(f_path):
-        new_f_path = f"D:\\code{f_path[2:]}"
-        f_base_path = os.path.split(new_f_path)[0]
-        if not os.path.exists(f_base_path):
-            # 新目录不存在，新建
-            os.makedirs(os.path.split(new_f_path)[0])
-        if os.path.exists(new_f_path):
-            # 新目录已存在，直接删除
-            if os.path.exists(f_path):
-                shutil.rmtree(f_path)
-        else:
-            shutil.move(f_path, new_f_path)
+        os.remove(f_path)
+        # new_f_path = f"D:\\code{f_path[2:]}"
+        # f_base_path = os.path.split(new_f_path)[0]
+        # if not os.path.exists(f_base_path):
+        #     # 新目录不存在，新建
+        #     os.makedirs(os.path.split(new_f_path)[0])
+        # if os.path.exists(new_f_path):
+        #     # 新目录已存在，直接删除
+        #     if os.path.exists(f_path):
+        #         shutil.rmtree(f_path)
+        # else:
+        #     shutil.move(f_path, new_f_path)
     db_session.commit()
 
 
@@ -121,8 +128,7 @@ def del_empty_file():
         for f_path in get_local_file_names(driver):
             if os.path.getsize(f_path):
                 continue
-            f_paths = os.path.split(f_path)
-            if "downloading" in f_paths[-1] or "baiduyun" in f_paths[-1]:
+            if is_baiduyun_tmp(f_path):
                 # logger.info(f"{f_path} is baidu, will not del")
                 continue
             logger.info(f"{f_path} will be removed")
