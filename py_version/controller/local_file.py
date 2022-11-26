@@ -46,8 +46,9 @@ def file_finger_exist(f_name: str) -> bool:
                .first() is not None
 
 
-def compute_dir_file_finger(dir: str):
-    for f_name in get_local_file_names(dir):
+def compute_dir_file_finger(_dir: str):
+    logger.info(f"will compute dir {_dir}")
+    for f_name in get_local_file_names(_dir):
         if file_finger_exist(f_name):
             logger.info(f"{f_name} exist")
             continue
