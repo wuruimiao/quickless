@@ -1,4 +1,6 @@
 import logging
+from multiprocessing import Pool
+from multiprocessing.pool import ThreadPool
 import os
 import hashlib
 import shutil
@@ -40,19 +42,31 @@ def file_finger_exist(f_name: str) -> bool:
                .first() is not None
 
 
+def compute_driver_file_finger(driver: str):
+    for f_name in get_local_file_names(driver):
+        if file_finger_exist(f_name):
+            logger.info(f"{f_name} exist")
+            continue
+        logger.info(f"{f_name} will compute")
+        finger = get_file_finger(f_name)
+        created_at = updated_at = get_now_str()
+        m = FileFinger(file_path=f_name, finger=finger, created_at=created_at, updated_at=updated_at)
+        db_session.add(m)
+        db_session.commit()
+
+
 def compute_file_finger():
+    # pool = ThreadPool(processes=5)
+    pool = Pool(processes=4)
     sync_table()
+    res = []
     for driver in dir_names:
-        for f_name in get_local_file_names(driver):
-            if file_finger_exist(f_name):
-                logger.info(f"{f_name} exist")
-                continue
-            logger.info(f"{f_name} will compute")
-            finger = get_file_finger(f_name)
-            created_at = updated_at = get_now_str()
-            m = FileFinger(file_path=f_name, finger=finger, created_at=created_at, updated_at=updated_at)
-            db_session.add(m)
-            db_session.commit()
+        r = pool.apply_async(compute_driver_file_finger, (driver, ))
+        res.append(r)
+    for r in res:
+        r.get()
+    pool.close()
+    pool.join()
 
 
 def get_same_file():
