@@ -147,24 +147,30 @@ def rename_path():
 all_drivers = ("E", "F", "G", "H")
 
 
-def renew_dir_files(f_path: str):
+def renew_dir_files(_dir: str):
     """
     检查路径下的文件，是否存在，若不存在，看看是否在其他盘符下相同路径
     是则更新记录
     """
-    for f_path in get_local_file_names(f_path):
+    for f in FileFingerM.filter_start_with_file_path(_dir):
+        f_path = f.file_path
         if is_baiduyun_tmp(f_path):
             del_record(f_path)
             continue
         if os.path.exists(f_path):
             continue
+        logger.info(f"renew {f_path}")
         for d in all_drivers:
             new_f_path = f"{d}{f_path[1:]}"
             if not os.path.exists(new_f_path):
                 continue
             if FileFingerM.get_by_file_path(new_f_path):
+                logger.info(f"new exist, just del old")
+                del_record(f_path)
                 break
+            logger.info(f"modify {f_path} to {new_f_path}")
             _f = FileFingerM.get_by_file_path(f_path)
             _f.file_path = new_f_path
             db_session.add(_f)
             db_session.commit()
+            break

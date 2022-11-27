@@ -26,5 +26,8 @@ class _FileFingerManger(object):
     def get_by_file_path(self, f_path: str):
         return self._db_session.query(FileFinger).filter_by(file_path=f_path).first()
 
+    def filter_start_with_file_path(self, f_path: str):
+        return self._db_session.query(FileFinger).filter(FileFinger.file_path.like(f"{f_path}%")).all()
+
 
 FileFingerM = _FileFingerManger(db_session)
