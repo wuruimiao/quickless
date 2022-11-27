@@ -1,12 +1,29 @@
+import logging
+from functools import wraps
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-
-def init_db():
-    engine = create_engine("sqlite:///local_file.db", echo=True, future=True)
-    return scoped_session(sessionmaker(bind=engine))
-
+logger = logging.getLogger(__name__)
 
 engine = create_engine("sqlite:///local_file.db", echo=False)
 db_session = scoped_session(sessionmaker(bind=engine))
-# db_session = init_db()
+
+
+def scoped_db_session():
+    def decorator(func):
+        @wraps(func)
+        def _fn(*args, **kwargs):
+            session = db_session
+            try:
+                session()
+                logger.debug('start db session')
+                return func(*args, **kwargs)
+            finally:
+                session.remove()
+                logger.debug('db session removed')
+
+        return _fn
+
+    return decorator
+
+

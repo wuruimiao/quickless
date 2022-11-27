@@ -1,7 +1,11 @@
 import logging
 import sys
 from view_gui.main import run_gui
-from controller.local_file import compute_file_finger, del_empty_file, get_same_file, del_same_file, compute_dir_file_finger
+from controller.local_file import (
+    compute_file_finger, del_empty_file,
+    get_same_file, del_same_file, compute_dir_file_finger,
+    renew_dir_files,
+)
 from controller.watch_keyboard import watch_keyboard
 
 logger = logging.getLogger(__name__)
@@ -28,5 +32,8 @@ if __name__ == '__main__':
             logger.info(f"please spec dir")
         else:
             compute_dir_file_finger(argv[2])
-
-
+    elif command == "renew_dir":
+        if len(argv) <= 2:
+            logger.info(f"please spec dir")
+        else:
+            renew_dir_files(argv[2])

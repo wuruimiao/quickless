@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String
 from sqlalchemy.orm import declarative_base, relationship
+from db.connnection import db_session
 
 Base = declarative_base()
 
@@ -16,3 +17,14 @@ class FileFinger(Base):
 def sync_table():
     from db.connnection import engine
     Base.metadata.create_all(engine)
+
+
+class _FileFingerManger(object):
+    def __init__(self, db_session):
+        self._db_session = db_session
+
+    def get_by_file_path(self, f_path: str):
+        return self._db_session.query(FileFinger).filter_by(file_path=f_path).first()
+
+
+FileFingerM = _FileFingerManger(db_session)

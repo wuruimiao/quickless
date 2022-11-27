@@ -8,7 +8,7 @@ import shutil
 from sqlalchemy.orm import aliased
 from sqlalchemy import and_
 from db.connnection import db_session
-from model.all import sync_table, FileFinger
+from model.all import sync_table, FileFinger, FileFingerM
 from utils.time import get_now_str
 
 logger = logging.getLogger(__name__)
@@ -106,8 +106,12 @@ def del_same_file():
         del_file(del_f)
 
 
-def del_file(f_path: str):
+def del_record(f_path: str):
     db_session.query(FileFinger).filter_by(file_path=f_path).delete()
+    db_session.commit()
+
+
+def del_file(f_path: str):
     if os.path.exists(f_path):
         os.remove(f_path)
         # new_f_path = f"D:\\code{f_path[2:]}"
@@ -121,8 +125,7 @@ def del_file(f_path: str):
         #         shutil.rmtree(f_path)
         # else:
         #     shutil.move(f_path, new_f_path)
-    db_session.commit()
-
+    del_record(f_path)
 
 def del_empty_file():
     for driver in dir_names:
@@ -139,3 +142,29 @@ def del_empty_file():
 def rename_path():
     # 重命名文件夹时，也要更新数据库，不然数据会不准
     pass
+
+
+all_drivers = ("E", "F", "G", "H")
+
+
+def renew_dir_files(f_path: str):
+    """
+    检查路径下的文件，是否存在，若不存在，看看是否在其他盘符下相同路径
+    是则更新记录
+    """
+    for f_path in get_local_file_names(f_path):
+        if is_baiduyun_tmp(f_path):
+            del_record(f_path)
+            continue
+        if os.path.exists(f_path):
+            continue
+        for d in all_drivers:
+            new_f_path = f"{d}{f_path[1:]}"
+            if not os.path.exists(new_f_path):
+                continue
+            if FileFingerM.get_by_file_path(new_f_path):
+                break
+            _f = FileFingerM.get_by_file_path(f_path)
+            _f.file_path = new_f_path
+            db_session.add(_f)
+            db_session.commit()
