@@ -1,6 +1,7 @@
 import logging
 from multiprocessing import Pool
 from multiprocessing.pool import ThreadPool
+import signal
 import os
 import hashlib
 import shutil
@@ -50,7 +51,7 @@ def compute_dir_file_finger(_dir: str):
     logger.info(f"will compute dir {_dir}")
     for f_name in get_local_file_names(_dir):
         if file_finger_exist(f_name):
-            logger.info(f"{f_name} exist")
+            # logger.info(f"{f_name} exist")
             continue
         logger.info(f"{f_name} will compute")
         finger = get_file_finger(f_name)
@@ -58,11 +59,14 @@ def compute_dir_file_finger(_dir: str):
         m = FileFinger(file_path=f_name, finger=finger, created_at=created_at, updated_at=updated_at)
         db_session.add(m)
         db_session.commit()
+    return 1
 
 
 def compute_file_finger():
     # pool = ThreadPool(processes=5)
+    original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
     pool = Pool(processes=4)
+    signal.signal(signal.SIGINT, original_sigint_handler)
     sync_table()
     res = []
     for driver in dir_names:
@@ -70,6 +74,7 @@ def compute_file_finger():
         res.append(r)
     for r in res:
         r.get()
+    pool.terminate()
     pool.close()
     pool.join()
 
@@ -160,10 +165,12 @@ def renew_dir_files(_dir: str):
         if os.path.exists(f_path):
             continue
         logger.info(f"renew {f_path}")
+        to_other = False
         for d in all_drivers:
             new_f_path = f"{d}{f_path[1:]}"
             if not os.path.exists(new_f_path):
                 continue
+            to_other = True
             if FileFingerM.get_by_file_path(new_f_path):
                 logger.info(f"new exist, just del old")
                 del_record(f_path)
@@ -174,3 +181,6 @@ def renew_dir_files(_dir: str):
             db_session.add(_f)
             db_session.commit()
             break
+        if not to_other:
+            logger.info(f"{f_path} not found, will del")
+            del_record(f_path)
