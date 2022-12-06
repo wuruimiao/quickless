@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from multiprocessing import Pool
 from multiprocessing.pool import ThreadPool
 import signal
@@ -24,6 +25,16 @@ dir_names = (
 
 def is_baiduyun_tmp(f_path):
     return "baiduyun" in f_path or "downloading" in f_path
+
+
+def is_in_same_dir(fa_path, fb_path):
+    """
+    是否大概在同一大目录
+    """
+    fa = Path(fa_path).parts[:3]
+    fb = Path(fb_path).parts[:3]
+    f = fa == fb
+    return f
 
 
 def get_local_file_names(dir_name: str):
@@ -93,6 +104,8 @@ def del_same_file():
     for f1, f2 in files:
         if is_baiduyun_tmp(f1) or is_baiduyun_tmp(f2):
             continue
+        if not is_in_same_dir(f1, f2):
+            continue
         need_del = True
         if not os.path.exists(f1):
             # f1不存在，直接删除
@@ -131,6 +144,7 @@ def del_file(f_path: str):
         # else:
         #     shutil.move(f_path, new_f_path)
     del_record(f_path)
+
 
 def del_empty_file():
     for driver in dir_names:

@@ -4,3 +4,5 @@ pynput~=1.7.6
 PyQtWebEngine~=5.15.6
 SQLAlchemy~=1.4.44
 opencv-python~=4.6.0.66
+numpy~=1.23.5
+matplotlib~=3.6.2
