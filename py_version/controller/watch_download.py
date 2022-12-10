@@ -10,7 +10,7 @@ from controller.ai.identify import identify_color
 from controller.ai.tool_page import get_bar, get_ensure_save_window
 from utils.image import display_img, display_img_by_name
 from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
-
+from controller.gui_windows import back_origin_position
 logger = logging.getLogger(__name__)
 
 
@@ -31,6 +31,7 @@ def watch_download():
                 # 需要取消下载
                 state = "init"
                 print("cancel download")
+
                 cancel_download_for_exist()
             # display_img(get_ensure_save_window(img))
 

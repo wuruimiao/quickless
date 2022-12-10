@@ -54,11 +54,8 @@ class JS(QDialog):
         btn2 = QPushButton("无刷新视频页下载并关闭", self)
         btn2.clicked.connect(s)
 
-        def s():
-            with back_origin_position():
-                finish_download()
         btn3 = QPushButton("下载完成", self)
-        btn3.clicked.connect(s)
+        btn3.clicked.connect(finish_download)
         # btn4 = QPushButton("工具页下载", self)
         # btn4.clicked.connect(lambda x: focus_page()
         #                                or refresh_page()
@@ -70,11 +67,8 @@ class JS(QDialog):
         btn5 = QPushButton("无刷新工具页下载", self)
         btn5.clicked.connect(s)
 
-        def s():
-            with back_origin_position():
-                cancel_download_for_exist()
         btn6 = QPushButton("取消下载", self)
-        btn6.clicked.connect(s)
+        btn6.clicked.connect(cancel_download_for_exist)
 
         box = QGridLayout()
         box.addWidget(btn)
