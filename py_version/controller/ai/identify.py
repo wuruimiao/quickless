@@ -88,6 +88,7 @@ def _get_color(point) -> str:
 
 
 def identify_color(img):
+    # TODO: large image compute slow
     img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     color_count = defaultdict(int)
     point_count = 0

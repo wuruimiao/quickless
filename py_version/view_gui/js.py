@@ -1,3 +1,5 @@
+import time
+
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
 from controller.gui_js import download_from_video_page, goto_tool_from_video_page
@@ -19,6 +21,7 @@ class JS(QDialog):
                     pre_page()
                     close_page()
                     next_page()
+                    time.sleep(1)
         btn = QPushButton("打开5个下载页", self)
         btn.clicked.connect(s)
 

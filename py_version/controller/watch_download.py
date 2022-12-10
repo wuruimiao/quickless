@@ -29,9 +29,10 @@ def watch_download():
             color = identify_color(get_ensure_save_window(img))
             if len(color) > 3:
                 # 需要取消下载
+                state = "init"
                 print("cancel download")
                 cancel_download_for_exist()
-            display_img(get_ensure_save_window(img))
+            # display_img(get_ensure_save_window(img))
 
             color = identify_color(get_bar(img))
             if "blue" in color:

@@ -7,4 +7,5 @@ def get_bar(img):
 
 def get_ensure_save_window(img):
     # 373 166     1152 693
-    return img[166:693, 373: 1152, :]
+    # 375 250     471 287
+    return img[250:287, 375: 471, :]
