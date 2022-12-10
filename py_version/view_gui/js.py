@@ -1,57 +1,86 @@
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
-from controller.gui_js import download_from_video_page, goto_tool_from_video_page
-from controller.gui_chrome import focus_page, continue_to_page
-from controller.gui_thatwind_tool import cancel_download_for_exist, download_from_tool_page
-from controller.gui_windows import back_left_screen
-from utils.chrome_keyboard import close_page, back_page, refresh_page, pre_page, wait_page, next_page
+from controller.gui_js import download_from_video_page, goto_tool_from_video_page, no_refresh_tool_download, \
+    finish_download
+from controller.gui_chrome import focus_page
+from controller.gui_thatwind_tool import cancel_download_for_exist
+from controller.gui_windows import back_left_screen, back_origin_position
+from utils.chrome_keyboard import close_page, pre_page, next_page
 
 
 class JS(QDialog):
     def __init__(self, parent=None):
         super(JS, self).__init__(parent)
-        # btn = QPushButton("视频页下载", self)
-        # btn.clicked.connect(lambda x: continue_to_page()
-        #                               or download_from_video_page()
-        #                               or back_left_screen())
+
+        def s():
+            with back_origin_position():
+                focus_page()
+                for i in range(5):
+                    goto_tool_from_video_page()
+                    pre_page()
+                    close_page()
+                    next_page()
+        btn = QPushButton("打开5个下载页", self)
+        btn.clicked.connect(s)
+
+        def s():
+            with back_origin_position():
+                focus_page()
+                download_from_video_page()
+                pre_page()
+                close_page()
         btn1 = QPushButton("视频页无刷新下载并关闭视频页", self)
-        btn1.clicked.connect(lambda x: focus_page()
-                                       or download_from_video_page()
-                                       or pre_page()
-                                       or close_page())
+        btn1.clicked.connect(s)
+
+        def s():
+            with back_origin_position():
+                focus_page()
+                next_page()
+                download_from_video_page()
+                pre_page()
+                close_page()
+                back_left_screen()
         btn7 = QPushButton("onetab页无刷新下载并关闭", self)
-        btn7.clicked.connect(lambda x: focus_page()
-                                       or next_page()
-                                       or download_from_video_page()
-                                       or pre_page()
-                                       or close_page()
-                                       or back_left_screen())
+        btn7.clicked.connect(s)
+
+        def s():
+            with back_origin_position():
+                download_from_video_page()
+                pre_page()
+                close_page()
+                back_left_screen()
         btn2 = QPushButton("无刷新视频页下载并关闭", self)
-        btn2.clicked.connect(lambda x: download_from_video_page()
-                                       or pre_page()
-                                       or close_page()
-                                       or back_left_screen())
+        btn2.clicked.connect(s)
+
+        def s():
+            with back_origin_position():
+                finish_download()
         btn3 = QPushButton("下载完成", self)
-        btn3.clicked.connect(lambda x: focus_page()
-                                       or close_page()
-                                       or back_page())
+        btn3.clicked.connect(s)
         # btn4 = QPushButton("工具页下载", self)
         # btn4.clicked.connect(lambda x: focus_page()
         #                                or refresh_page()
         #                                or download_from_tool_page())
+
+        def s():
+            with back_origin_position():
+                no_refresh_tool_download()
         btn5 = QPushButton("无刷新工具页下载", self)
-        btn5.clicked.connect(lambda x: focus_page()
-                                       or download_from_tool_page())
+        btn5.clicked.connect(s)
+
+        def s():
+            with back_origin_position():
+                cancel_download_for_exist()
         btn6 = QPushButton("取消下载", self)
-        btn6.clicked.connect(cancel_download_for_exist)
+        btn6.clicked.connect(s)
 
         box = QGridLayout()
-        # box.addWidget(btn)
+        box.addWidget(btn)
+        box.addWidget(btn5)
         box.addWidget(btn1)
         box.addWidget(btn7)
         box.addWidget(btn2)
         box.addWidget(btn3)
         # box.addWidget(btn4)
-        box.addWidget(btn5)
         box.addWidget(btn6)
         self.setLayout(box)

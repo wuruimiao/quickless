@@ -17,9 +17,8 @@ def close_page():
     pyautogui.hotkey('ctrl', 'w')
 
 
-def back_page():
-    pyautogui.hotkey('altleft', 'left')
-
+# def back_page():
+#     pyautogui.hotkey('altleft', 'left')
 
 def refresh_page():
     pyautogui.hotkey('ctrl', 'r')
