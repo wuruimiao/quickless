@@ -84,17 +84,20 @@ def _get_color(point) -> str:
     for color, func in __color_func.items():
         if func(point):
             return color
-    print(point, "no color")
+    return ""
 
 
 def identify_color(img):
     img = cv.cvtColor(img, cv.COLOR_BGR2HSV)
     color_count = defaultdict(int)
     point_count = 0
-    for row in img:
-        for point in row:
+    for column_index in range(len(img)):
+        row = img[column_index]
+        for row_index in range(len(row)):
+            point = img[column_index][row_index]
             c = _get_color(point)
             if not c:
+                # print(column_index, row_index, point)
                 continue
             color_count[_get_color(point)] += 1
             point_count += 1

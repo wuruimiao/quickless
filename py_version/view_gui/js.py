@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
-from controller.gui_js import download_from_video_page, goto_tool_from_video_page, no_refresh_tool_download, \
-    finish_download
+from controller.gui_js import download_from_video_page, goto_tool_from_video_page
 from controller.gui_chrome import focus_page
-from controller.gui_thatwind_tool import cancel_download_for_exist
+from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
 from controller.gui_windows import back_left_screen, back_origin_position
 from utils.chrome_keyboard import close_page, pre_page, next_page
 

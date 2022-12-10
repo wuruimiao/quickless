@@ -1,8 +1,7 @@
 import pyautogui
 
-from controller.gui_chrome import focus_page
 from controller.gui_thatwind_tool import download_from_tool_page
-from utils.chrome_keyboard import wait_page, refresh_page, close_page
+from utils.chrome_keyboard import wait_page
 
 """
 将页面放在屏幕右半边，下面的位置就是对的
@@ -23,11 +22,3 @@ def download_from_video_page():
     download_from_tool_page()
 
 
-def no_refresh_tool_download():
-    focus_page()
-    download_from_tool_page()
-
-
-def finish_download():
-    focus_page()
-    close_page()
