@@ -8,3 +8,5 @@ numpy~=1.23.5
 matplotlib~=3.6.2
 mss~=7.0.1
 Pillow~=9.3.0
+pytesseract~=0.3.10
+pyperclip~=1.8.2

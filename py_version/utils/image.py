@@ -1,3 +1,5 @@
+import time
+
 import cv2 as cv
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,3 +26,4 @@ def capture_screen(img_handler):
             img = np.array(img)
             img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
             img_handler(img)
+            time.sleep(1)

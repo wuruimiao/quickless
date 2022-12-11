@@ -1,4 +1,4 @@
-from urllib.parse import unquote
+from urllib.parse import unquote, urlparse
 
 import pyautogui
 import pyperclip
@@ -18,6 +18,10 @@ def continue_to_page():
     refresh_page()
 
 
+def new_page():
+    pyautogui.hotkey('ctrl', 't')
+
+
 def get_page_link() -> str:
     # 点击地址栏
     with back_origin_position():
@@ -28,3 +32,12 @@ def get_page_link() -> str:
     link = pyperclip.paste()
     link = unquote(link)
     return link
+
+
+def get_page_host() -> str:
+    """
+    获取页面的域名
+    """
+    link = get_page_link()
+    link = urlparse(link)
+    return link.netloc

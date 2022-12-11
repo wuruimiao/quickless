@@ -45,5 +45,7 @@ def test(img):
 
 # capture_screen(test)
 from controller.gui_thatwind_tool import get_tool_page_origin_link
+from controller.gui_chrome import get_page_host
 
 print(get_tool_page_origin_link())
+print(get_page_host())

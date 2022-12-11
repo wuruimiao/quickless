@@ -57,6 +57,7 @@ def get_tool_page_origin_link() -> str:
     """
     link = get_page_link()
     link = urlparse(link)
+
     params = parse_qs(link.params)
     params.update(parse_qs(link.query))
     params.update(parse_qs(link.fragment))

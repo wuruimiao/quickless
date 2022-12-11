@@ -4,6 +4,7 @@ import time
 from controller.ai.identify import identify_color
 from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
 from controller.img_page import get_bar, get_ensure_save_window
+from controller.gui_chrome import get_page_host
 from utils.image import capture_screen
 
 logger = logging.getLogger(__name__)
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 state = ""
 
 
-def __watch_download(img):
+def __watch_tool_page(img):
     global state
     # display_img(img)
     color = identify_color(get_ensure_save_window(img))
@@ -21,6 +22,7 @@ def __watch_download(img):
         state = "init"
         print("cancel download")
         cancel_download_for_exist()
+        return
     # display_img(get_ensure_save_window(img))
 
     color = identify_color(get_bar(img))
@@ -37,9 +39,15 @@ def __watch_download(img):
         pass
     elif state == "ing":
         # 判断是否是在下载中，不是看看是为啥不行
-
         pass
-    time.sleep(2)
+
+
+def __watch_download(img):
+    host = get_page_host()
+    if host == "tools.thatwind.com":
+        __watch_tool_page(img)
+    else:
+        pass
 
 
 def watch_download():
