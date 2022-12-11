@@ -42,3 +42,6 @@ if __name__ == '__main__':
     elif command == "watch_download":
         from controller.watch_download import watch_download
         watch_download()
+    elif command == "ai":
+        from controller.ai.main import main
+        main()

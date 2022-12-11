@@ -7,10 +7,9 @@ from PIL import Image
 from mss import mss
 
 from controller.ai.identify import identify_color
-from controller.ai.tool_page import get_bar, get_ensure_save_window
-from utils.image import display_img, display_img_by_name
+from controller.img_page import get_bar, get_ensure_save_window
 from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
-from controller.gui_windows import back_origin_position
+
 logger = logging.getLogger(__name__)
 
 
@@ -27,6 +26,7 @@ def watch_download():
             img = cv.cvtColor(img, cv.COLOR_RGB2BGR)
             # display_img(img)
             color = identify_color(get_ensure_save_window(img))
+            # TODO: 下载工具页未加载完成
             if len(color) > 3:
                 # 需要取消下载
                 state = "init"

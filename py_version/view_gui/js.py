@@ -16,13 +16,13 @@ class JS(QDialog):
         def s():
             with back_origin_position():
                 focus_page()
-                for i in range(5):
+                for i in range(10):
                     goto_tool_from_video_page()
                     pre_page()
                     close_page()
                     next_page()
                     time.sleep(1)
-        btn = QPushButton("打开5个下载页", self)
+        btn = QPushButton("打开10个下载页", self)
         btn.clicked.connect(s)
 
         def s():
