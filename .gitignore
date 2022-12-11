@@ -134,3 +134,4 @@ node_modules
 package-lock.json
 *.db
 *.mp4
+*.png
