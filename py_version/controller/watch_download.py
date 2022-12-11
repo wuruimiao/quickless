@@ -33,11 +33,15 @@ def __watch_download(img):
     elif "green" in color:
         # 下载完成，点击关闭
         finish_download()
-        state = "init"
+        state = "finish"
     elif "white" in color and state != "ing":
         # 开始下载
         no_refresh_tool_download()
         state = "ing"
+        pass
+    elif state == "ing":
+        # 判断是否是在下载中，不是看看是为啥不行
+
         pass
     time.sleep(2)
 

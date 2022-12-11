@@ -1,6 +1,7 @@
 import pyautogui
+from urllib.parse import urlparse, parse_qs
 
-from controller.gui_chrome import focus_page
+from controller.gui_chrome import focus_page, get_page_link
 from controller.gui_windows import back_origin_position
 from utils.chrome_keyboard import close_page, wait_page
 
@@ -47,3 +48,18 @@ def finish_download():
     with back_origin_position():
         focus_page()
         close_page()
+
+
+def get_tool_page_origin_link() -> str:
+    """
+    获取工具页的原始下载页面
+    """
+    link = get_page_link()
+    link = urlparse(link)
+    params = parse_qs(link.params)
+    params.update(parse_qs(link.query))
+    params.update(parse_qs(link.fragment))
+    link = params.get("referer", [])
+    if len(link) > 0:
+        link = link[0]
+    return link

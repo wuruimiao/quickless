@@ -45,3 +45,7 @@ if __name__ == '__main__':
     elif command == "ai":
         from controller.ai.main import main
         main()
+    elif command == "mouse":
+        import pyautogui
+        print(pyautogui.position())
+        print(pyautogui.size())

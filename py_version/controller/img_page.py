@@ -10,6 +10,6 @@ def get_ensure_save_window(img):
     return img[250:287, 375: 471, :]
 
 
-def get_tool_page(img):
-    # 5 170    1916 2088
-    return img[170:2088, 5:1916, :]
+def get_left_screen_page(img):
+    # 7 170    1906 2088
+    return img[170:2088, 7:1906, :]
