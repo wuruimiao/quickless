@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base
+
 from db.connnection import db_session
 
 Base = declarative_base()

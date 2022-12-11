@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QDialog, QHBoxLayout, QSpinBox, QVBoxLayout, QPushBu
 
 from model.time_record import TimeRecord
 from utils.data import get_data, store
-from utils.time import get_remain_time
 from utils.gui import make_one_line, highlight
+from utils.time import get_remain_time
 
 
 class ChongFan(QDialog):

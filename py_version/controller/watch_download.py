@@ -1,14 +1,10 @@
 import logging
 import time
 
-import numpy as np
-import cv2 as cv
-from PIL import Image
-from mss import mss
-from utils.image import capture_screen
 from controller.ai.identify import identify_color
-from controller.img_page import get_bar, get_ensure_save_window
 from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
+from controller.img_page import get_bar, get_ensure_save_window
+from utils.image import capture_screen
 
 logger = logging.getLogger(__name__)
 

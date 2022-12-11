@@ -1,4 +1,5 @@
 import cv2 as cv
+
 from utils.image import display_img, capture_screen
 
 
@@ -12,7 +13,6 @@ def handle_img(img):
     for i in range(100, 200, 5):
         edges = cv.Canny(img, i, 200)
         display_img(edges)
-
 
 
 def main():

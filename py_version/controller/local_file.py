@@ -1,14 +1,13 @@
-import logging
-from pathlib import Path
-from multiprocessing import Pool
-from multiprocessing.pool import ThreadPool
-import signal
-import os
 import hashlib
-import shutil
+import logging
+import os
+import signal
+from multiprocessing import Pool
+from pathlib import Path
 
-from sqlalchemy.orm import aliased
 from sqlalchemy import and_
+from sqlalchemy.orm import aliased
+
 from db.connnection import db_session
 from model.all import sync_table, FileFinger, FileFingerM
 from utils.time import get_now_str

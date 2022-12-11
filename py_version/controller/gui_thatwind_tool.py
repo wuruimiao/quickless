@@ -1,5 +1,6 @@
-import pyautogui
 from urllib.parse import urlparse, parse_qs
+
+import pyautogui
 
 from controller.gui_chrome import focus_page, get_page_link
 from controller.gui_windows import back_origin_position

@@ -1,5 +1,6 @@
 import logging
 from functools import wraps
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
@@ -25,5 +26,3 @@ def scoped_db_session():
         return _fn
 
     return decorator
-
-

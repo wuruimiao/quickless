@@ -11,7 +11,7 @@ img = cv.Canny(img, )
 contours = cv.findContours()
 
 min_w = frame.cols * 0.75
-min_h = frame.rows*0.75
+min_h = frame.rows * 0.75
 for point in contours:
     min_rect = cv.minAreaRect(point)
     degree = abs(min_rect.angle)
@@ -22,5 +22,3 @@ for point in contours:
 # 如果图片斜了啥的，需要怎么做？怎么转换成一张斜图？
 # 找到最大外接矩形，找到轮廓，
 # 2、二值分割+形态学方法+Hough直线 找到最大外接矩阵
-
-

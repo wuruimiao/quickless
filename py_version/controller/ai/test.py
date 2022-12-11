@@ -14,9 +14,8 @@ import matplotlib.pyplot as plt
 
 
 import numpy as np
-import matplotlib.pylab as plb
 
-img0 = np.array([[0, 0, 1], [0,1,0], [1, 0, 0]])
+img0 = np.array([[0, 0, 1], [0, 1, 0], [1, 0, 0]])
 # plb.imshow(img0, cmap="gray")
 # plt.show()
 
@@ -26,7 +25,6 @@ img0 = np.array([[0, 0, 1], [0,1,0], [1, 0, 0]])
 # cap.release()
 
 frame = cv.imread("../../images/buyu.png")
-
 
 # plt.imshow(frame, cmap='gray')
 # plt.imshow(cv.cvtColor(frame, cv.COLOR_BGR2RGB))
@@ -108,12 +106,3 @@ img1 = cv.resize(frame, (300, 300))
 plt.imshow(cv.add(wm, img1))
 # plt.imshow(cv.addWeighted(wm, 0.9, img1, 1, 0))
 plt.show()
-
-
-
-
-
-
-
-
-

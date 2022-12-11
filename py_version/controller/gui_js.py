@@ -20,5 +20,3 @@ def download_from_video_page():
     goto_tool_from_video_page()
     wait_page()
     download_from_tool_page()
-
-

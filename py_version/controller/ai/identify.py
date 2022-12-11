@@ -1,7 +1,8 @@
-import operator
 import logging
-import cv2 as cv
+import operator
 from collections import defaultdict
+
+import cv2 as cv
 
 logger = logging.getLogger(__name__)
 

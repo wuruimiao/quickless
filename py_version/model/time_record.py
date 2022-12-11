@@ -7,6 +7,7 @@ class TimeRecord(object):
     """
     记录时间：天，小时，分钟，秒
     """
+
     def __init__(self, day: int = 0, hour: int = 0, minute: int = 0, second: int = 0):
         self.day = day
         self.hour = hour
