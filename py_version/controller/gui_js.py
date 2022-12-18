@@ -1,6 +1,6 @@
 import pyautogui
 
-from controller.gui_thatwind_tool import download_from_tool_page
+from controller.gui_thatwind_tool import DownloadPage
 from utils.chrome_keyboard import wait_page
 
 """
@@ -19,4 +19,4 @@ def goto_tool_from_video_page():
 def download_from_video_page():
     goto_tool_from_video_page()
     wait_page()
-    download_from_tool_page()
+    DownloadPage.download_from_tool_page()

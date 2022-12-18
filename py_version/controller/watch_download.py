@@ -2,8 +2,7 @@ import logging
 import time
 
 from controller.ai.identify import identify_color
-from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download, get_bar, \
-    get_ensure_save_window
+from controller.gui_thatwind_tool import DownloadPage
 from controller.gui_chrome import get_page_host
 from utils.image import capture_screen
 
@@ -15,26 +14,26 @@ state = ""
 def __watch_tool_page(img):
     global state
     # display_img(img)
-    color = identify_color(get_ensure_save_window(img))
+    color = identify_color(DownloadPage.get_ensure_save_window(img))
     # TODO: 下载工具页未加载完成
     if len(color) > 3:
         # 需要取消下载
         state = "init"
         print("cancel download")
-        cancel_download_for_exist()
+        DownloadPage.cancel_download_for_exist()
         return
     # display_img(get_ensure_save_window(img))
 
-    color = identify_color(get_bar(img))
+    color = identify_color(DownloadPage.get_bar(img))
     if "blue" in color:
         pass
     elif "green" in color:
         # 下载完成，点击关闭
-        finish_download()
+        DownloadPage.finish_download()
         state = "finish"
     elif "white" in color and state != "ing":
         # 开始下载
-        no_refresh_tool_download()
+        DownloadPage.no_refresh_tool_download()
         state = "ing"
         pass
     elif state == "ing":

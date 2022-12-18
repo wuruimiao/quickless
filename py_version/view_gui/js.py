@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 
 from controller.gui_chrome import focus_page
 from controller.gui_js import download_from_video_page, goto_tool_from_video_page
-from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
+from controller.gui_thatwind_tool import DownloadPage
+    # cancel_download_for_exist, no_refresh_tool_download, finish_download
 from controller.gui_windows import back_left_screen, back_origin_position
 from controller.gui_chrome import get_page_host
 from utils.chrome_keyboard import close_page, pre_page, next_page
@@ -20,6 +21,7 @@ class JS(QDialog):
                 focus_page()
                 for i in range(10):
                     goto_tool_from_video_page()
+
                     pre_page()
                     if download_page != get_page_host():
                         close_page()
@@ -62,7 +64,7 @@ class JS(QDialog):
         btn2.clicked.connect(s)
 
         btn3 = QPushButton("下载完成", self)
-        btn3.clicked.connect(finish_download)
+        btn3.clicked.connect(DownloadPage.finish_download)
 
         # btn4 = QPushButton("工具页下载", self)
         # btn4.clicked.connect(lambda x: focus_page()
@@ -71,13 +73,13 @@ class JS(QDialog):
 
         def s():
             with back_origin_position():
-                no_refresh_tool_download()
+                DownloadPage.no_refresh_tool_download()
 
         btn5 = QPushButton("无刷新工具页下载", self)
         btn5.clicked.connect(s)
 
         btn6 = QPushButton("取消下载", self)
-        btn6.clicked.connect(cancel_download_for_exist)
+        btn6.clicked.connect(DownloadPage.cancel_download_for_exist)
 
         box = QGridLayout()
         box.addWidget(btn)
