@@ -6,7 +6,9 @@ from controller.gui_chrome import focus_page
 from controller.gui_js import download_from_video_page, goto_tool_from_video_page
 from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
 from controller.gui_windows import back_left_screen, back_origin_position
+from controller.gui_chrome import get_page_host
 from utils.chrome_keyboard import close_page, pre_page, next_page
+from utils.config import download_page, video_page
 
 
 class JS(QDialog):
@@ -19,7 +21,8 @@ class JS(QDialog):
                 for i in range(10):
                     goto_tool_from_video_page()
                     pre_page()
-                    close_page()
+                    if download_page != get_page_host():
+                        close_page()
                     next_page()
                     time.sleep(1)
 

@@ -29,6 +29,7 @@ def get_page_link() -> str:
         pyautogui.click(614, 97)
         pyautogui.hotkey('ctrl', 'a')
         pyautogui.hotkey('ctrl', 'c')
+        pyautogui.click(614, 97)
     link = pyperclip.paste()
     link = unquote(link)
     return link

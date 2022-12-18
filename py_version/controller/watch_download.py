@@ -44,10 +44,10 @@ def __watch_tool_page(img):
 
 def __watch_download(img):
     host = get_page_host()
-    if host == "tools.thatwind.com":
-        __watch_tool_page(img)
-    else:
-        pass
+    # if host == "tools.thatwind.com":
+    __watch_tool_page(img)
+    # else:
+    #     pass
 
 
 def watch_download():
