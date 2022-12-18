@@ -66,3 +66,15 @@ def get_tool_page_origin_link() -> str:
     if len(link) > 0:
         link = link[0]
     return link
+
+
+def get_bar(img):
+    """
+    下载工具页的进度页
+    """
+    return img[1420:1440, 73:1350, :]
+
+
+def get_ensure_save_window(img):
+    # 375 250     471 287
+    return img[250:287, 375: 471, :]

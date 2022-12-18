@@ -2,8 +2,8 @@ import logging
 import time
 
 from controller.ai.identify import identify_color
-from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download
-from controller.img_page import get_bar, get_ensure_save_window
+from controller.gui_thatwind_tool import cancel_download_for_exist, no_refresh_tool_download, finish_download, get_bar, \
+    get_ensure_save_window
 from controller.gui_chrome import get_page_host
 from utils.image import capture_screen
 
@@ -43,7 +43,7 @@ def __watch_tool_page(img):
 
 
 def __watch_download(img):
-    host = get_page_host()
+    # host = get_page_host()
     # if host == "tools.thatwind.com":
     __watch_tool_page(img)
     # else:
