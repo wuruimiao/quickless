@@ -9,25 +9,26 @@ chrome快捷键：https://support.google.com/chrome/answer/10483214?hl=zh-Hans
 """
 
 
-def wait_page():
-    time.sleep(2)
+class _Chrome(object):
+    def wait_page(self, num=2):
+        # TODO: judge page loaded
+        time.sleep(num)
+
+    def close_page(self):
+        pyautogui.hotkey('ctrl', 'w')
+
+    # def back_page(self):
+    #     pyautogui.hotkey('altleft', 'left')
+
+    def refresh_page(self):
+        pyautogui.hotkey('ctrl', 'r')
+        self.wait_page()
+
+    def pre_page(self):
+        pyautogui.hotkey('ctrl', 'shiftleft', 'tab')
+
+    def next_page(self):
+        pyautogui.hotkey('ctrl', 'tab')
 
 
-def close_page():
-    pyautogui.hotkey('ctrl', 'w')
-
-
-# def back_page():
-#     pyautogui.hotkey('altleft', 'left')
-
-def refresh_page():
-    pyautogui.hotkey('ctrl', 'r')
-    wait_page()
-
-
-def pre_page():
-    pyautogui.hotkey('ctrl', 'shiftleft', 'tab')
-
-
-def next_page():
-    pyautogui.hotkey('ctrl', 'tab')
+Chrome = _Chrome()

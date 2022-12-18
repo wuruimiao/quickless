@@ -5,7 +5,7 @@ import pyautogui
 
 from controller.gui_chrome import focus_page, get_page_link
 from controller.gui_windows import back_origin_position
-from utils.chrome_keyboard import close_page, wait_page
+from utils.chrome_keyboard import Chrome
 
 
 class _DownloadPage(object):
@@ -13,7 +13,7 @@ class _DownloadPage(object):
         with back_origin_position():
             pyautogui.typewrite(["enter"])
             pyautogui.click(1110, 856)
-            close_page()
+            Chrome.close_page()
 
     def download_from_tool_page(self):
         with back_origin_position():
@@ -31,10 +31,10 @@ class _DownloadPage(object):
 
             # 选择保存目录
             pyautogui.click(158, 1389)
-            wait_page()
+            Chrome.wait_page()
             pyautogui.typewrite(['enter'])
 
-            wait_page()
+            Chrome.wait_page()
             # 下载，按钮位置可能变化，多点几次
             for y in range(1525, 1567, 6):
                 pyautogui.click(1285, y)
@@ -47,7 +47,7 @@ class _DownloadPage(object):
     def finish_download(self):
         with back_origin_position():
             focus_page()
-            close_page()
+            Chrome.close_page()
 
     def get_tool_page_origin_link(self) -> str:
         """
@@ -77,6 +77,9 @@ class _DownloadPage(object):
     def get_link_part(self, img):
         # 30 454     1378 639
         return img[463:625, 51:1378, :]
+
+    def need_refresh(self) -> bool:
+        return True
 
 
 DownloadPage = _DownloadPage()

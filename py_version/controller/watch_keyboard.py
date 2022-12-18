@@ -3,8 +3,10 @@ import pyautogui
 from pynput.keyboard import Key, Listener, Controller
 
 from controller.gui_js import goto_tool_from_video_page
-from controller.gui_thatwind_tool import cancel_download_for_exist, download_from_tool_page
-from utils.chrome_keyboard import wait_page, refresh_page
+from controller.gui_thatwind_tool import DownloadPage
+# cancel_download_for_exist, download_from_tool_page
+from utils.chrome_keyboard import Chrome
+# wait_page, refresh_page
 
 
 def on_press(key):
@@ -20,18 +22,18 @@ def on_release(key):
     if key == Key.page_up:
         # 从视频页下载
         print("按下了page up")
-        refresh_page()
+        Chrome.refresh_page()
         goto_tool_from_video_page()
-        wait_page()
-        download_from_tool_page()
+        Chrome.wait_page()
+        DownloadPage.download_from_tool_page()
     elif key == Key.page_down:
         # 从工具页下载
         print("按下了page down")
-        refresh_page()
-        download_from_tool_page()
+        Chrome.refresh_page()
+        DownloadPage.download_from_tool_page()
     elif key == Key.pause:
         print("按下了pause")
-        cancel_download_for_exist()
+        DownloadPage.cancel_download_for_exist()
     elif key == Key.delete:
         # 停止监听
         quit()

@@ -4,7 +4,7 @@ import pyautogui
 import pyperclip
 
 from controller.gui_windows import back_origin_position
-from utils.chrome_keyboard import refresh_page
+from utils.chrome_keyboard import Chrome
 
 
 def focus_page():
@@ -15,7 +15,7 @@ def focus_page():
 def continue_to_page():
     # 回到原来的页面
     focus_page()
-    refresh_page()
+    Chrome.refresh_page()
 
 
 def new_page():

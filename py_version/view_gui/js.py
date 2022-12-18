@@ -5,10 +5,10 @@ from PyQt5.QtWidgets import QDialog, QPushButton, QGridLayout
 from controller.gui_chrome import focus_page
 from controller.gui_js import download_from_video_page, goto_tool_from_video_page
 from controller.gui_thatwind_tool import DownloadPage
-    # cancel_download_for_exist, no_refresh_tool_download, finish_download
 from controller.gui_windows import back_left_screen, back_origin_position
 from controller.gui_chrome import get_page_host
-from utils.chrome_keyboard import close_page, pre_page, next_page
+from utils.chrome_keyboard import Chrome
+# close_page, pre_page, next_page, wait_page, refresh_page
 from utils.config import download_page, video_page
 
 
@@ -21,11 +21,13 @@ class JS(QDialog):
                 focus_page()
                 for i in range(10):
                     goto_tool_from_video_page()
-
-                    pre_page()
+                    if DownloadPage.need_refresh():
+                        Chrome.wait_page(1)
+                        Chrome.refresh_page()
+                    Chrome.pre_page()
                     if download_page != get_page_host():
-                        close_page()
-                    next_page()
+                        Chrome.close_page()
+                    Chrome.next_page()
                     time.sleep(1)
 
         btn = QPushButton("打开10个下载页", self)
@@ -35,8 +37,8 @@ class JS(QDialog):
             with back_origin_position():
                 focus_page()
                 download_from_video_page()
-                pre_page()
-                close_page()
+                Chrome.pre_page()
+                Chrome.close_page()
 
         btn1 = QPushButton("视频页无刷新下载并关闭视频页", self)
         btn1.clicked.connect(s)
@@ -44,10 +46,10 @@ class JS(QDialog):
         def s():
             with back_origin_position():
                 focus_page()
-                next_page()
+                Chrome.next_page()
                 download_from_video_page()
-                pre_page()
-                close_page()
+                Chrome.pre_page()
+                Chrome.close_page()
                 back_left_screen()
 
         btn7 = QPushButton("onetab页无刷新下载并关闭", self)
@@ -56,8 +58,8 @@ class JS(QDialog):
         def s():
             with back_origin_position():
                 download_from_video_page()
-                pre_page()
-                close_page()
+                Chrome.pre_page()
+                Chrome.close_page()
                 back_left_screen()
 
         btn2 = QPushButton("无刷新视频页下载并关闭", self)

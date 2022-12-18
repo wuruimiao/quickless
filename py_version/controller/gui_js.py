@@ -1,7 +1,7 @@
 import pyautogui
 
 from controller.gui_thatwind_tool import DownloadPage
-from utils.chrome_keyboard import wait_page
+from utils.chrome_keyboard import Chrome
 
 """
 将页面放在屏幕右半边，下面的位置就是对的
@@ -18,5 +18,5 @@ def goto_tool_from_video_page():
 
 def download_from_video_page():
     goto_tool_from_video_page()
-    wait_page()
+    Chrome.wait_page()
     DownloadPage.download_from_tool_page()
