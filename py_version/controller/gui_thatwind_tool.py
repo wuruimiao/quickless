@@ -6,6 +6,7 @@ import pyautogui
 from controller.gui_chrome import focus_page, get_page_link
 from controller.gui_windows import back_origin_position
 from utils.chrome_keyboard import Chrome
+from utils.image import img_ocr, capture_screen
 
 
 class _DownloadPage(object):
@@ -78,8 +79,18 @@ class _DownloadPage(object):
         # 30 454     1378 639
         return img[463:625, 51:1378, :]
 
-    def need_refresh(self) -> bool:
-        return True
+    def need_refresh(self, download_page_img) -> bool:
+        download_page_img = self.get_link_part(download_page_img)
+        result = img_ocr(download_page_img)
+        result = result.rstrip()
+        return result in ("null", "")
+
+    def ensure_ok(self):
+        def ok(img) -> bool:
+            if not self.need_refresh(img):
+                return False
+            Chrome.refresh_page()
+        capture_screen(ok)
 
 
 DownloadPage = _DownloadPage()

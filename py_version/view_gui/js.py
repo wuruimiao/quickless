@@ -8,8 +8,8 @@ from controller.gui_thatwind_tool import DownloadPage
 from controller.gui_windows import back_left_screen, back_origin_position
 from controller.gui_chrome import get_page_host
 from utils.chrome_keyboard import Chrome
-# close_page, pre_page, next_page, wait_page, refresh_page
 from utils.config import download_page, video_page
+from utils.image import capture_screen
 
 
 class JS(QDialog):
@@ -21,9 +21,8 @@ class JS(QDialog):
                 focus_page()
                 for i in range(10):
                     goto_tool_from_video_page()
-                    if DownloadPage.need_refresh():
-                        Chrome.wait_page(1)
-                        Chrome.refresh_page()
+                    Chrome.wait_page(1)
+                    DownloadPage.ensure_ok()
                     Chrome.pre_page()
                     if download_page != get_page_host():
                         Chrome.close_page()
